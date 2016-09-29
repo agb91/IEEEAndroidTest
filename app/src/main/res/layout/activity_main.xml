@@ -8,57 +8,19 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!--<Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Get Sensors"
-            android:id="@+id/button"
-            android:onClick="getData"/>-->
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/scrollView">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-
-                android:id="@+id/monitor" />
-        </ScrollView>
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/scrollView">
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/mainlayout"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <!--<Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Get QR"
-                android:id="@+id/getqr"
-                android:layout_weight="1"
-                android:onClick="getQR"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Send Email"
-                android:id="@+id/sendEmail"
-                android:layout_weight="1"
-                android:onClick="sendEmail"
-                />-->
+            android:layout_height="match_parent">
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

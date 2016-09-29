@@ -5,6 +5,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,18 +18,15 @@ import java.util.Vector;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager mSensorManager;
-    private TextView monitor;
     private List<Sensor> listAllSensors;// in this list all the sensors
     private Vector<String> allTheSensorsToPrint = new Vector<String>();// in this list all the string to print (each string related to a sensor)
+    private ViewGroup linearLayout;
 
     @Override
     public final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        monitor = (TextView) findViewById(R.id.monitor);// just a textview where to write the results
-        monitor.setText("");
-
+        linearLayout = (ViewGroup) findViewById(R.id.mainlayout);
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         listAllSensors = mSensorManager.getSensorList(Sensor.TYPE_ALL); // in this list all the sensors
 
@@ -64,16 +64,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 //put this string in the vector, each sensor in a different row (based on the sensor's type)
                 allTheSensorsToPrint.set(event.sensor.getType(),  toPrint );
-                monitor.setText("");
+
+                if(((LinearLayout) linearLayout).getChildCount() > 0)//clean the screen.. toggle all existing buttons
+                    ((LinearLayout) linearLayout).removeAllViews();
+
                 for( int i = 0; i < allTheSensorsToPrint.size() ; i++ )// every time something changes reprint all the sensors' line
                 {
-                    monitor.append( allTheSensorsToPrint.get( i ) + " \n " );
+                    if( !allTheSensorsToPrint.get( i ).equalsIgnoreCase( "-" ) )// if the result makes sense... empty are not interesting
+                    {// create a new button, having written the row related to this sensor
+                        Button bt = new Button(this);
+                        bt.setText( allTheSensorsToPrint.get( i ) + " \n " );
+                        bt.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT));
+                        linearLayout.addView(bt);
+                    }
                 }
             }
             catch (Exception e)
             {
-                monitor.setText("");
-                monitor.append( "black death");//shit happens
+                //let's curse
             }
 
         }
